@@ -1,0 +1,17 @@
+﻿Ctrl Shift + увеличить размер шрифта
+Ctrl Alt T запустить терминал
+Ctrl L — clear — очистить консоль
+sudo apt update скачает новые списки пакетов 
+Формат команды установки пакета: sudo apt install {название пакета}
+установим пакет openssh-server - sudo apt install openssh-server
+sudo apt install mc — установить пакет mc
+mc — запустить
+Ctrl + O — свернуть
+exit — закрыть
+Up/Down - прокрутка истории команд
+ ip a -  список сетевых интерфейсов
+systemctl status ssh — статус сервиса ssh
+ssh {user}@{host address} - подключиться
+exit - отключиться
+ssh -p 8022 {user}@localhost подключиться с пробросом портов
+
