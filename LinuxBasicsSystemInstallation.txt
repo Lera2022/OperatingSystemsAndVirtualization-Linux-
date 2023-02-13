@@ -1,7 +1,7 @@
 ﻿Ctrl Shift + увеличить размер шрифта
-Ctrl Alt T запустить терминал
-Ctrl L — clear — очистить консоль
-sudo apt update скачает новые списки пакетов 
+Ctrl Alt T - запустить терминал
+Ctrl L / clear — очистить консоль
+sudo apt update - скачает новые списки пакетов 
 Формат команды установки пакета: sudo apt install {название пакета}
 установим пакет openssh-server - sudo apt install openssh-server
 sudo apt install mc — установить пакет mc
@@ -9,9 +9,21 @@ mc — запустить
 Ctrl + O — свернуть
 exit — закрыть
 Up/Down - прокрутка истории команд
- ip a -  список сетевых интерфейсов
+ ip a -  список сетевых интерфейсов подключенных
 systemctl status ssh — статус сервиса ssh
 ssh {user}@{host address} - подключиться
 exit - отключиться
-ssh -p 8022 {user}@localhost подключиться с пробросом портов
+ssh -p 8022 {user}@localhost - подключиться с пробросом портов
+sudo apt install gcc make perl - установить пакеты
+sudo reboot - перезагрузить
+sudo usermod -aG vboxsf {user} - общая папка
+sudo -i эмуляция суперпользователя
+ss -ntlp - какие порты открыты и по каким адресам они слушаются
+exit - выход из суперпользователя
+sudo su работа в суперпользователе
+history
+exit
+ping ya.ru или {host address} - проверить инет (доступ к машине)
+Ctrl C - остановить пинг (прервать любую команду)
+Super A - настройки
 
