@@ -14,7 +14,7 @@ systemctl status ssh — статус сервиса ssh
 ssh {user}@{host address} - подключиться
 exit - отключиться
 ssh -p 8022 {user}@localhost - подключиться с пробросом портов
-sudo apt install gcc make perl - установить пакеты
+sudo apt install gcc make perl - установить пакеты зависимостей
 sudo reboot - перезагрузить
 sudo usermod -aG vboxsf {user} - общая папка
 sudo -i эмуляция суперпользователя
