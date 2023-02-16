@@ -1,0 +1,96 @@
+root
+UID = 0
+Home/root
+
+user
+UID > 1000
+Home/home/user
+
+daemon
+1 < UID < 1000
+Home
+
+UID - user ID
+GID - group ID
+home
+login password
+shell
+
+/etc/passwd
+/etc/group
+/etc/shadow (root / sudo)
+
+useradd
+adduser - скрипт
+usermod
+userdel
+passwd
+chage - изменение свойств пароля
+groupadd
+groupdel
+
+sudo useradd -s /bin/bash -m -d /home/testuser testuser
+tail /etc/passwd
+sudo adduser testuser2
+sudo tail /etc/shadow
+sudo passwd testuser
+sudo ls -al /home/testuser
+ls -al /etc/skel
+G - список дополнительных групп
+sudo usermod -aG adm testuser
+id
+sudo id testuser
+sudo usermod -g www-data testuser
+man usermod
+sudo userdel testuser2
+sudo chage testuser
+sudo groupadd testgroup
+sudo groupdel testgroup
+su - переключение пользователя
+sudo su - на суперпользователя
+sudo - выполнение с правами
+/etc/sudoers - конфигурация
+visudo - редактирование
+su testuser
+id
+sudo su
+%sudo	ALL=(ALL:ALL) /usr/bin/passwd - только то, что ему можно делать
+%sudo	ALL=(ALL:ALL) NOPASSWD:ALL
+
+chown - изменение владельца и группы
+chown -R - рекурсивно
+chown testuser:testgroup
+chown testuser
+chgrp - изменение группы
+chgrp - R - 
+chgrp testgroup
+sudo chown testuser:www-data testt
+sudo chown -R testuser:www-data /home/lk/test3
+sudo chgrp -R www-data /home/lk/test3
+SUID 4000
+SGID 2000
+Sticky bit 1000
+
+chmod - change mode
+chmod -R testdir/
+chmod u=rwx,g=rx,o=r testfile
+chmod 751 testfile
+chmod a+x
+chmod 4755
+sudo chmod u=rwx,g=rw,o=rx test2
+sudo chmod 664 test2
+sudo chmod -R 775 test3
+sudo chmod -r test3
+cat test3/test2
+sudo chmod +r test3
+sudo chmod u+rwx,g=rw,o-rx test2
+sudo chmod g+s test3
+sudo chmod a+w /home/lk/test3
+
+			Файлы	Директории
+Полные права		666	777
+Значение umask		022	022
+Права по умолчанию	644	755
+
+umask
+
