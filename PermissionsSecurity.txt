@@ -1,0 +1,14 @@
+useradd -m -s /bin/bash -d /home/user user
+useradd --help
+man useradd
+userdel -f test1
+usermod --help
+usermod -aG sudo user - добавили юзера в группу судо
+cat /etc/group
+cat /etc/group | grep 'sudo'
+cat /etc/passwd | grep 'user'
+su user
+addgroup test1
+chmod u=rwx,g=r,o-r 1
+chmod a=rwx 1
+chmod a-x 1
