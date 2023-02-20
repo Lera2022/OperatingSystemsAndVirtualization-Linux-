@@ -12,3 +12,15 @@ addgroup test1
 chmod u=rwx,g=r,o-r 1
 chmod a=rwx 1
 chmod a-x 1
+chmod o-x 1
+man chattr
+lsattr 1
+chattr +i 3 - ничо нельзя
+chattr +a 3 - только дозапись
+chmod +t d3
+stat -c "%a %n" /home/lk/t
+stat -c "%a %n" /home/lk *
+stat --help
+umask 002
+touch 222 333 444
+
