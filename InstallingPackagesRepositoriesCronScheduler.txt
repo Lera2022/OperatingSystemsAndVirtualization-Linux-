@@ -1,0 +1,90 @@
+Утилита apt
+● Автоматизированное управление пакетами с учетом зависимостей
+● Работа с удалёнными репозиториями
+● apt search package_name — поиск пакета по названию и
+описанию
+● apt list package_name — поиск пакета по имени
+● apt show package_name — посмотреть информацию о пакете
+● apt install package_name -y — установить пакет без вопросов
+● apt remove package_name — удалить пакет, при этом сохранятся
+файлы с настройками
+● apt purge package_name — полностью удалить пакет, включая
+конфигурационные файлы
+● apt upgrade — обновить все установленные пакеты
+● apt update — обновить информацию о пакетах в репозиториях,
+указанных в настройках
+
+sudo apt update
+sudo apt search nginx
+sudo apt list nginx
+sudo apt install nginx
+sudo apt install -y nginx
+cd /etc/nginx
+sudo apt remove nginx
+sudo apt autoremove
+sudo apt purge nginx
+apt list mc
+apt show mc
+
+Утилита dpkg
+● Ручное управление пакетами
+● Нет работы с зависимостями
+● Локальные пакеты
+● dpkg -l — просмотр списка пакетов
+● dpkg -i package_name — установить пакет или группу пакетов
+● dpkg -r package_name — удалить пакет или группу пакетов
+
+wget https://download.virtualbox.org/virtualbox/7.0.6/virtualbox-7.0_7.0.6-155176~Ubuntu~jammy_amd64.deb
+dpkg -i virtualbox-7.0_7.0.6-155176~Ubuntu~jammy_amd64.deb
+apt -f install
+cd /etc/apt
+cd sources.list.d/
+cat > lk.list
+deb [arch=amd64 signed-by=/usr/share/keyrings/oracle-virtualbox-2016.gpg] https://download.virtualbox.org/virtualbox/debian <mydist> contrib
+nano lk.list
+<mydist> заменить на jammy
+apt update
+wget -O- https://www.virtualbox.org/download/oracle_vbox_2016.asc | sudo gpg --dearmor --yes --output /usr/share/keyrings/oracle-virtualbox-2016.gpg
+apt update
+
+snap-пакеты
+● Все зависимости – в пакете
+● Пакет изолирован от системы – разрешения
+● Программы запускаются дольше
+● Больше потребление ресурсов
+● Нет проблем совместимости
+● snap search package_name — поиск пакета
+● snap install package_name — установка пакета
+● snap refresh package_name — обновление пакета
+● snap remove package_name — удаление пакета
+● snap list — просмотр установленных пакетов
+
+Планировщик задач cron
+● Выполнение регулярных задач по расписанию
+● Автоматизация обслуживания системы или приложений
+● Системные задачи:
+	○ /etc/crontab
+	○ /etc/cron.d/*
+● Пользовательские задачи:
+	○ /var/spool/cron/*
+	○ управление: утилита crontab
+
+cd /etc
+nano crontab
+cd cron.daily/
+cd ../cron.d
+nano e2scrub_all
+ps afx | grep [c]ron
+
+Утилита crontab
+● crontab -l вывести содержимое текущего файла расписания
+● crontab -r удаление текущего файла расписания:
+● crontab -e редактирование текущего файла расписания
+● sudo crontab -u username – работа с файлом расписания
+другого пользователя
+
+crontab -e
+1
+crontab -l
+crontab -r
+

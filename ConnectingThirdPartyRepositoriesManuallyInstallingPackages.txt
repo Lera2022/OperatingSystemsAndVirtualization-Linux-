@@ -1,0 +1,5 @@
+man apt
+!! - если забыли написать sudo
+apt list -a nginx - все версии
+ss -ntlp
+systemctl status nginx
