@@ -3,3 +3,14 @@ man apt
 apt list -a nginx - все версии
 ss -ntlp
 systemctl status nginx
+cd /etc/apt
+nano sources.list
+lsb_release -a
+cat /etc/os-release
+dpkg -i virtualbox-7.0_7.0.6-155176~Ubuntu~jammy_amd64.deb
+snap install gimp
+snap remove gimp
+nano crontab
+cd /etc
+cd cron.hourly
+1 * * * * root data >> /home/lk/data.txt
