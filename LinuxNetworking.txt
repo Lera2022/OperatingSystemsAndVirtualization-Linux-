@@ -1,0 +1,126 @@
+—етевые интерфейсы и команда ip
+? ip a Ц список всех интерфейсов
+? ip -s a Ц показ статистики
+? ip -c -s a Ц включение подсветки
+? ip a show enp0s3 Ц данные по одному интерфейсу
+? ip link show enp0s3 Ц данные уровн€ L2 (link)
+? ip r Ц просмотр информации о маршрутах
+
+—океты и порты
+? ss Ц socket stat
+? ss -ntlp Ц TCP-сокеты в состо€нии LISTEN
+? ss -ntulp Ц TCP и UDP-сокеты в состо€нии LISTEN
+? ss -tulpan Ц ¬се TCP и UDP-сокеты
+
+sudo !! - посмотреть запущенные приложени€
+
+Netplan
+? /etc/netplan/*.yaml Ц конфигурационные файлы
+? netplan try Ц тестирование и применение конфигурации
+? netplan apply Ц применение конфигурации
+?  онфигураци€ по умолчанию:
+# Let NetworkManager manage all devices on this system
+network:
+ version: 2
+ renderer: NetworkManager
+
+Netplan Ц конфигураци€ с DHCP
+network:
+ version: 2
+ renderer: networkd
+ ethernets:
+ enp0s3:
+ dhcp4: yes
+ nameservers:
+ addresses:
+ - 8.8.8.8
+ - 8.8.4.4
+
+Netplan Ц статическа€ конфигураци€
+network:
+ version: 2
+ renderer: networkd
+ ethernets:
+ enp0s3:
+ dhcp4: no
+ addresses: [192.168.0.8/24]
+ gateway4: 192.168.0.1
+ nameservers:
+ addresses:
+ - 8.8.8.8
+ - 8.8.4.4
+
+ƒиагностика сети
+? ping 8.8.8.8 Ц доступность хоста (ICMP протокол)
+? ping ya.ru Ц проверка DNS и доступности
+? host -t a yandex.ru Ц проверка DNS
+? host -t a yandex.ru 8.8.8.8 Ц другой DNS-сервер
+? dig @8.8.8.8 google.com Ц подробна€ информаци€ по DNS
+? tracepath ya.ru Ц просмотр маршрута прохождени€ пакетов
+? traceroute ya.ru Ц альтернатива
+? mtr ya.ru Ц посто€нный мониторинг доступности хостов
+
+host -t mx yandex.ru 8.8.8.8
+cat /etc/hosts
+resolvectl dns
+
+ѕравила фильтрации
+? ѕросмотр таблицы
+0 iptables -L -nv
+0 iptables -L -nv -t nat
+? ѕолитика по умолчанию
+0 iptables -P INPUT DROP
+? ƒобавление правил
+0 iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+0 iptables -I INPUT -p tcp --dport 80 -j ACCEPT
+0 iptables -A INPUT -p tcp -s 192.168.0.100 --dport 80 -j DROP
+? ”даление правил
+0 iptables -D INPUT 3
+0 iptables -D INPUT -p tcp --dport 80 -j ACCEPT
+? —брос правил
+0 iptables -F
+
+iptables -A INPUT -p tcp --dport=22 -j ACCEPT
+iptables -A INPUT -p tcp --dport=80 -j ACCEPT
+iptables -A INPUT -p tcp --dport=443 -j ACCEPT
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -A INPUT -p icmp -j ACCEPT
+iptables -P INPUT DROP
+
+ѕример конфигурации сервера
+# SSH allow
+iptables -A INPUT -p tcp --dport=22 -j ACCEPT
+# HTTP, HTTPS allow
+iptables -A INPUT -p tcp -m multiport --dport 80,443 -j ACCEPT
+# loopback allow
+iptables -A INPUT -i lo -j ACCEPT
+# ICMP
+iptables -A INPUT -p icmp -j ACCEPT
+# established connections allow
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+# policy drop
+iptables -P INPUT DROP
+
+ѕеренаправление портов
+? –едирект с 80 на 8080 порт (TCP):
+0 iptables -t nat -I PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8080
+? ѕроверка:
+0 iptables -L -nv -t nat
+
+? —охранение и восстановление из файла
+0 iptables-save > iptables.rules
+0 iptables-restore < iptables.rules
+? —ервис netfilter-persistent
+0 apt install iptables-persistent netfilter-persistent
+0 netfilter-persistent save
+0  онфигураци€ в /etc/iptables
+
+iptables-save > ip.rules
+cat ip.rules
+iptables-restore < ip.rules
+iptables -L -nv
+apt install iptables-persistent netfilter-persistent
+cd /etc/iptables
+ll
+cat rules.v4
