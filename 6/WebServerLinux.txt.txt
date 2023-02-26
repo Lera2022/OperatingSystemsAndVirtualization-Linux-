@@ -1,6 +1,185 @@
-���������� ������� ��� ���
-? �������� URL � �������:
+���������� ������� ��� ���
+? �������� URL � �������:
 0 curl -L https://ya.ru/
 0 wget https://yastatic.net/jquery/2.1.4/jquery.min.js
 
 curl
+lk@lk-open:~$ sudo su
+[sudo] пароль для lk:
+root@lk-open:/home/lk# apt install curl
+curl -L https://ya.ru/
+
+Конфигурация Nginx
+● Установка: sudo apt install nginx
+● Тестирование конфигурации: sudo nginx -t
+● Применить: sudo systemctl reload nginx
+● Конфигурация: /etc/nginx/*
+● Основной файл: /etc/nginx/nginx.conf
+● Блоки: server {}
+● Директивы: server_name site.ru;
+● Переменные: $uri
+● Документация: http://nginx.org/ru/docs/
+
+Пример конфигурации Nginx
+server {
+listen 80 default_server;
+listen [::]:80 default_server;
+root /var/www/html;
+index index.html index.htm index.nginx-debian.html;
+server_name _;
+location / {
+try_files $uri $uri/ =404;
+}
+}
+
+apt install nginx
+ss -ntlp
+ps afx
+curl localhost
+cd /etc/nginx
+ll
+nano nginx.conf
+nginx -t
+systemctl reload nginx
+ps afx
+cd sites-enabled
+nano default
+cd /var/www/html
+
+Конфигурация Apache
+● Установка: sudo apt install apache2
+● Тестирование конфигурации: sudo apachectl -t
+● Применить: sudo systemctl reload apache2
+● Конфигурация: /etc/apache2/*
+● Основной файл: /etc/apache2/apache2.conf
+● Блоки: <VirtualHost></VirtualHost>
+● Директивы: ServerName site.ru
+● Документация: https://httpd.apache.org/docs/2.4/en/
+
+Пример конфигурации Apache
+Listen 8081
+<VirtualHost *:8081>
+ServerName www.example.com
+ServerAdmin webmaster@localhost
+DocumentRoot /var/www/html
+ErrorLog /var/log/httpd/error.log
+CustomLog /var/log/httpd/access.log combined
+</VirtualHost>
+
+apt install apache2
+ps afx
+apachectl -t
+systemctl start apache2
+systemctl status apache2
+cd /etc/apache2
+nano ports.conf
+apachectl -t
+systemctl start apache2
+ps afx
+ss -ntlp
+cd sites-enabled
+nano 000-default.conf
+apachectl -t
+systemctl reload apache2
+curl localhost:8080
+cd /var/www/html
+curl localhost
+
+Пример конфигурации Nginx для Reverse proxy
+# Динамические запросы
+location / {
+proxy_pass http://localhost:8080;
+proxy_set_header Host $host;
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header X-Real-IP $remote_addr;
+}
+# Статические запросы
+location ~* ^.+.(jpg|jpeg|gif|png|ico|css|zip|pdf|txt|tar|js)$ {
+ root /var/www/html;
+}
+
+cd /etc/nginx
+cd sites-enabled
+
+Обработка PHP в Apache
+● Установка: apt install libapache2-mod-php8.1 php8.1
+● Обработка PHP подключается автоматически, по расширению файла
+● Файл для проверки:
+<?php
+phpinfo();
+?>
+● Проверяем: curl http://localhost/info.php
+
+cat php8.1.conf
+root@lk-open:/etc/apache2/mods-enabled# cd /var/www/html
+root@lk-open:/var/www/html# cat > info.php
+<?php
+phpinfo();
+?>
+
+Обработка PHP в PHP-FPM
+● Установка: apt install php8.1-fpm
+● Замена Apache для работы с PHP
+● Связь между Nginx и PHP-FPM через UNIX-сокет
+● Обработка происходит с помощью location в Nginx
+location ~ \.php$ {
+include snippets/fastcgi-php.conf;
+root /var/www/html;
+fastcgi_pass unix:/run/php/php8.1-fpm.sock;
+}
+
+root@lk-open:/etc/nginx/sites-enabled# cd /etc/php
+root@lk-open:/etc/php# ll
+итого 20
+drwxr-xr-x   3 root root  4096 фев 26 16:35 ./
+drwxr-xr-x 134 root root 12288 фев 26 16:35 ../
+drwxr-xr-x   6 root root  4096 фев 26 16:56 8.1/
+root@lk-open:/etc/php# cd 8.1
+root@lk-open:/etc/php/8.1# cd fpm
+root@lk-open:/etc/php/8.1/fpm#
+cd pool.d
+nano www.conf
+
+● Установка: apt install mysql-server-8.0
+● Заходим в консоль MySQL: sudo mysql
+● Переходим в системную БД mysql: use mysql;
+● Получаем список пользователей: SELECT * FROM user\G
+● Создаём новую базу данных: CREATE DATABASE gb;
+● Создаём таблицу: CREATE TABLE test(i INT);
+● Создадим записи в таблице: INSERT INTO test (i) VALUES (1),(2),(3),(4);
+● Сделаем выборку из таблицы: SELECT * FROM test;
+
+mysql> show databases;
+use mysql;
+show tables;
+SELECT * FROM user;
+ SELECT * FROM user\G;
+CREATE DATABASE gb;
+
+mysql> CREATE DATABASE gb;
+Query OK, 1 row affected (0,02 sec)
+
+mysql> use gb;
+Database changed
+mysql> show tables;
+Empty set (0,01 sec)
+
+mysql> CREATE TABLE test (i INT);
+Query OK, 0 rows affected (0,04 sec)
+
+mysql> INSERT INTO test (i) VALUES (1), (2), (3), (4);
+Query OK, 4 rows affected (0,02 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM test;
++------+
+| i    |
++------+
+|    1 |
+|    2 |
+|    3 |
+|    4 |
++------+
+4 rows in set (0,00 sec)
+
+mysql> exit

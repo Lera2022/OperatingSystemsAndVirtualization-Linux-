@@ -1,0 +1,18 @@
+systemctl status nginx
+ss -ntlp
+ll /etc/nginx
+ll /etc/nginx/sites-available/
+ll /etc/nginx/sites-enabled/
+nginx -t
+root@lk-open:~# systemctl restart nginx
+root@lk-open:~# systemctl status nginx
+systemctl reload nginx
+ll /etc/apache2
+ll /etc/apache2/sites-available/
+cd /etc/apache2/sites-available/
+
+
+
+
+
+
