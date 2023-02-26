@@ -1,0 +1,6 @@
+Консольные утилиты для веб
+? Получить URL в консоли:
+0 curl -L https://ya.ru/
+0 wget https://yastatic.net/jquery/2.1.4/jquery.min.js
+
+curl
