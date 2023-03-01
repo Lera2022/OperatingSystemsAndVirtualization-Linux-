@@ -14,3 +14,11 @@ nano crontab
 cd /etc
 cd cron.hourly
 1 * * * * root data >> /home/lk/data.txt
+crontab -e -u lk
+crontab -e -u www-data
+ll /var/spool/cron/crontabs
+cd /home/lk
+crontab -e
+*/1 * * * * tar -zcvf /home/lk/backup.tar.gz /home/lk/t
+tar -xzvf backup.tar.gz -C /tmp
+crontab -r -u lk
