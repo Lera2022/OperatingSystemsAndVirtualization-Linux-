@@ -161,4 +161,27 @@ networks:
 yamllint docker-compose.yml
 docker-compose up -d
 
-
+docker-compose ps
+docker-compose images
+docker volume ls
+docker-compose logs webserver
+docker volume ls
+ip -c a
+docker compose rm -fsv
+docker-compose ps -a
+docker-compose ps
+docker ps -a
+docker ps
+docker volume ls
+docker volume rm wordpress_certbot-etc
+docker volume ls
+docker volume rm wordpress_dbdata
+docker volume rm wordpress_wordpress
+docker volume ls
+docker images
+docker rmi mysql:8.0 wordpress:6.0.1-php8.0-fpm-alpine \
+nginx:1.22.0-alpine
+docker rmi {IMAGE ID}
+docker system prune -a
+ip -c a
+docker network ls

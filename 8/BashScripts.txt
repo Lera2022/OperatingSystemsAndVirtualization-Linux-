@@ -1,0 +1,229 @@
+Код возврата (завершения) — exit code
+● Код ошибки последней команды
+● Проверить: echo $?
+● Условная связка (И): ls -al && echo "Success!"
+● Условная связка (ИЛИ): ls -al || echo "Fail!"
+
+ls
+echo $?                             // 0
+cat /etc/shadow
+echo $?                             // 1
+cat /etc/passwd
+echo $?                             // 0
+cat /etc/shadow || echo "Failed!"   // Failed!
+cat /etc/shadow && echo "Failed!"   // cat /etc/shadow: Отказано в доступе
+cat /etc/passwd && echo "Success!"
+
+Перенаправление потоков ввода-вывода
+● program < file – перенаправление ввода из файла file
+● program > file – перенаправление вывода (STDOUT) в файл file (запись с начала файла)
+● program >> file – перенаправление вывода (STDOUT) в файл file в режиме дополнения файла
+● program 2> file – перенаправление ошибок (STDERR) в файл file (запись с начала файла)
+● program 2>> file – перенаправление ошибок (STDERR) в файл file в режиме дополнения файла
+● program > file 2>&1 – перенаправление вывода (STDOUT) и ошибок (STDERR) в файл file
+(запись с начала файла)
+
+ls
+ls > ls_txt
+cat ls_txt
+ls >> ls_txt
+ls >> ls_txt
+cat ls_txt
+cat /etc/lsb-release /etc/shadow 2> err.txt
+cat /etc/lsb-release /etc/shadow 2> err.txt > std.txt
+cat /etc/lsb-release /etc/shadow > all.txt 2>&1
+
+Конвейер (pipeline, pipe)
+● Перенаправление ввода-вывода между процессами
+● ls -al | grep file
+● ls -al | grep -P '\.[cs]+'
+● cat /var/log/syslog | grep 'mysql' | grep -v 'file' | wc -l
+
+ps afx | grep ssh
+ps afx | grep ssh | grep -v pts
+ps afx | grep [s]s
+cd /var/log
+ll
+cat syslog
+cat syslog | grep error
+cat syslog | grep error | grep -v kernel
+cat syslog | grep error | grep -v kernel | grep -i 'sqlite'
+cat syslog | grep error | grep -v kernel | grep -i 'sqlite' | wc -l
+ls -al
+ls -a
+ls -a | sort
+ls -a | sort | wc -l
+df -h
+df -h | grep '/dev/sda'
+
+● Переменные окружения
+○ $PATH
+○ $UID
+○ $PWD
+● Пользовательские переменные
+○ var1=test
+○ echo $var1
+● Специальные переменные
+○ $1…$9
+○ $?
+
+cd /var/log
+printenv
+echo $PWD
+echo $OLDPWD
+var1=test
+echo $var1
+bash
+ps afx
+echo $var1
+exit
+var2=Test ftest fghjkl df k
+var2='Test ftest fghjkl df k'
+echo $var2
+var2='Test variable'
+var1='text in var1'
+var3='$var2 $var1'
+echo $var3            // $var2 $var1
+var3="$var2 $var1"
+echo $var3            // Test variable text in var1
+cd
+ls -al
+var_ls=$(ls -al)
+echo $var_ls
+var_ls=`ls -al`
+echo $var_ls
+
+cat > testscript
+#!/bin/bash
+directory=$1
+hidden_count=$(ls -A $directory | grep '^\.' | wc -l)
+echo “Hidden files in $directory found: $hidden_count”
+
+cat > testsc
+#!/bin/bash
+
+#First script
+
+directory=$1 # set variable
+hidden_count=$(ls -A $directory | grep '^\.' | wc -l)
+
+# Вывести содержимое переменной
+echo "Hidden files in $directory found: $hidden_count"
+
+● Относительный путь: ./testscript
+● Абсолютный путь: /home/db/test/testscript
+● Команда (должен быть в $PATH): testscript
+● Через команду bash: bash testscript
+● Первые три варианта требуют шебанг и права на
+исполнение
+
+echo $PATH
+pwd
+./testsc
+ls -al
+chmod +x testsc
+./testsc
+nano testsc
+./testsc /etc
+/home/db/testsc /etc
+chmod -x testsc
+ll
+bash testsc
+bash testsc /etc
+ls -al /bin/bash
+
+● Разделитель команд — ";"
+● Удобны для выполнения в терминале
+● Применимы все основные конструкции из bash
+● apt update; apt upgrade; echo "Upgrade complete!"
+
+ls-al; echo "Done!"
+
+Условия if и ветвления
+Синтаксис:
+if [ выражение ]
+ then
+ Действия, если выражение истинно
+ else
+ Действия в противоположном случае
+fi
+Пример:
+if [ -e file_name ]
+ then
+ echo "true"
+ else
+ echo "false"
+fi
+
+Варианты условий
+Операции сравнения строк
+● = или == возвращает true (истина), если строки равны
+● != возвращает true (истина), если строки не равны
+● -z возвращает true (истина), если строка пуста
+● -n возвращает true (истина), если строка не пуста
+Операции проверки файлов
+● -e возвращает true (истина), если файл существует (exists)
+● -d возвращает true (истина), если каталог существует (directory)
+Операции сравнения целых чисел (наиболее используемые)
+● -eq возвращает true (истина), если числа равны (equals)
+● -ne возвращает true (истина), если числа не равны (not equal)
+
+man test
+nano testsc
+#!/bin/bash
+
+#First script
+
+directory=$1 # set variable
+
+if [ -n $directory ]
+        then
+                echo "Dir OK"
+        else
+                echo "No dir"
+                exit 2
+fi
+
+hidden_count=$(ls -A $directory | grep '^\.' | wc -l)
+
+# Вывести содержимое переменной
+echo "Hidden files in $directory found: $hidden_count"
+
+#!/bin/bash
+
+#First script
+
+if [ -d $1 ]
+        then
+                echo "Dir OK"
+        else
+                echo "No dir"
+                exit 2
+fi
+
+directory=$1 # set variable
+
+hidden_count=$(ls -A $directory | grep '^\.' | wc -l)
+
+# Вывести содержимое переменной
+echo "Hidden files in $directory found: $hidden_count"
+
+./test  dcghjkl     // No dir
+./testsc /home/lk
+
+Цикл for
+Синтаксис:
+for имя_переменной in значения
+do
+ тело_цикла
+done
+Примеры:
+for h in {01..24}
+do
+echo $h
+done
+for (( c=1; c<=5; c++ ))
+do
+ echo "Попытка номер $c"
+done
+
