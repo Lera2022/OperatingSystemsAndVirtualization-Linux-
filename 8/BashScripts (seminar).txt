@@ -1,0 +1,30 @@
+type -a ls
+which ls
+ll
+nano .bashrc
+echo $PATH
+type cd
+type passwd
+cd /home/lk
+mkdir testdir && touch testdir/testfile
+ll
+ll testdir
+ls -al /home/lk/testdir || mkdir -p /home/lk/testdir
+touch f1 ; cat f1
+mkdir testdir && touch testdir/testfile && cat f1
+touch f1 & cat f1
+echo $?
+cat /var/log/syslog | grep 'mysql' | grep -v 'file' | wc -l
+cat /var/log/syslog | grep 'mysql' | grep -v 'file'
+cat /var/log/syslog | grep 'mysql'
+cat /var/log/syslog | grep 'mysql' | grep -v 'parser'
+cat /var/log/syslog | grep 'mysql' | grep -v '333718'
+cat > testfile
+test
+sdf
+sdfs
+df
+sdfghjkl test
+grep '^test' testfile
+ls -al | grep -P '\.[cs]+'
+ps afx | grep docker

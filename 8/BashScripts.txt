@@ -215,15 +215,73 @@ echo "Hidden files in $directory found: $hidden_count"
 Синтаксис:
 for имя_переменной in значения
 do
+
  тело_цикла
 done
 Примеры:
 for h in {01..24}
 do
+
 echo $h
 done
+
+
 for (( c=1; c<=5; c++ ))
 do
+
  echo "Попытка номер $c"
 done
 
+Цикл while
+Синтаксис:
+
+while [ условие ]
+do
+ Тело_цикла
+done
+
+Пример:
+c=10
+
+while [ $c -ge 0 ]
+do
+echo "Test"
+let "c = c - 1"
+done
+
+nano cycles.sh
+#!/bin/bash
+
+#For 1
+for h in file{1..10}
+do
+
+        echo $h
+
+done
+
+# While cycle
+c=10
+while [ $c -ge 0 ]
+do
+
+        echo "Test $c"
+        let "c = c - 1"
+done
+
+# For cycle 2
+for (( c=1; c<=5; c++ ))
+do
+        echo "Попытка номер $c"
+done
+
+chmod +x cycles.sh
+./cycles.sh
+
+type ls
+type -a ls
+which ls
+type cd
+type rm
+type for
+nano .bashrc
