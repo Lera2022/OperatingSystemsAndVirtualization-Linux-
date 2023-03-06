@@ -27,4 +27,62 @@ df
 sdfghjkl test
 grep '^test' testfile
 ls -al | grep -P '\.[cs]+'
+ls -al | grep file
 ps afx | grep docker
+cat /var/log/syslog | grep 'mysql' | grep -v 'file' | wc -l
+cat /etc/file1 2>> eee
+cat eee
+cat /etc/file1 /etc/file2 >> eee 2>&1
+cat eee
+mysql < file.bd > mysql
+apt update && apt autoremove -y && apt upgrade -y && apt install -f -y
+
+cat > testscript
+#!/bin/bash
+directory=$1
+hidden_count=$(ls -A $directory | grep '^\.' | wc -l)
+echo "Hidden files in $directory found: $hidden_count"
+
+nano testscript
+bash testscript
+chmod +x testscript
+./testscript
+./tests Tab
+/home/lk/test/testscript
+./testscript /etc
+./testscript /
+
+cat > t1
+#!/bin/bash
+
+# MySQL backup script
+
+PATH=$PATH:/usr/local/bin
+
+MUSER='root'
+#MPASS='12345'
+
+#DIR=`date +"%Y-%m-%d"`
+#DATE=`date +"%Y%m%d"`
+
+MYSQL="mysql --user=$MUSER --skip-column-names";
+
+for s in mysql lk `$MYSQL -e "SHOW DATABASES LIKE '%\_lk'"`;
+    do
+        mkdir $s;
+        for t in `$MYSQL -e "SHOW TABLES FROM $s"`;
+                do
+                    /usr/bin/mysqldump --user="$MUSER" --opt $s $t | gzip -1 > $s/$t.gz;
+                done
+    done
+
+nano t1
+mysql
+SHOW DATABASES;
+CREATE USER 'lk1'@'localhost' IDENTIFIED BY '12345';
+GRANT ALL PRIVILEGES ON * . * TO 'lk1'@'localhost';
+exit
+nano t1
+bash t1
+
+
